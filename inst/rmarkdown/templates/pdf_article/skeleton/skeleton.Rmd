@@ -1,0 +1,148 @@
+---
+title: My Long JDS paper title
+# optional short title
+short-title: My Short JDS paper title
+author:
+  - name: Author A
+    marker: '1,2'
+  - name: Author B
+    marker: 2
+  - name: Author C
+    marker: 3
+  - name: Author D
+    marker: 3
+affiliation:
+  - name: Institution A
+    marker: 1
+  - name: Institution B
+    marker: 2
+  - name: Institution C
+    marker: 3
+classoption:
+  - letterpaper # or a4paper
+  - inpress     # or inpress
+preamble: >
+  \usepackage{amsfonts,amsmath,amssymb,amsthm}
+  \usepackage{booktabs}
+  \usepackage{lipsum}
+abstract: >
+  This article presents a classification of disease severity for
+  patients with cystic fibrosis (CF). CF is a genetic disease that dramatically
+  decreases life expectancy and quality.
+keywords:
+  - Keyword A
+  - Keyword B
+  - Keyword C
+  - Keyword D
+bibliography: jds-draft.bib
+output: jds.rmd::pdf_article
+---
+
+
+# Equations
+
+Weibull distribution has the virtue of being a mathematically tractable model
+and is versatile in terms of its applications in reliability, life data
+analysis, actuarial science and others. Apart from being a potential model in
+survival analysis and reliability engineering, it has a vast domain of other
+applications.
+
+Equations are always parts of sentences, so they need to have
+appropriate punctuations. To evaluate the distribution of a normal
+variable, one use
+\begin{equation}
+  \label{eq:cdf}
+  \Pr(Z \le t) = \Phi\left(\frac{Z - \mu}{\sigma} \right),
+\end{equation}
+where $Z$ follows a $N(\mu, \sigma^2)$ distribution.
+Equations can be referenced by \texttt{$\backslash$eqref}.
+When $\mu = 0$ and $\sigma = 1$, the $Z$ in Equation~\eqref{eq:cdf}
+becomes a standard normal variable.
+
+
+Multiline equations can be presented with the \texttt{align}
+environment. For example,
+\begin{align*}
+  g_{\mu}(\phi) = 0,\\
+  g_{\mu}(X) = 1.
+\end{align*}
+
+
+An equation that is not referenced should not be labeled. The starred
+version of the \texttt{equation} and \texttt{align} are for this purpose.
+
+
+# Tables
+
+We recommend \LaTeX\ package \texttt{booktabs} for professional
+looking tables. Its toprule and bottomrule are thicker than midrule.
+
+A professional table contains no vertical lines.
+
+
+# Figures
+
+Vector graphics do not lose clarity when being scaled. Make your
+figure in pdf format when you first generate it and keep in mind its
+sizes in the article to avoid over-scaling. Do not simply convert a
+jpeg or png image to a pdf.
+
+
+# Code
+
+The document class \texttt{jds} provides several commands to decorate
+\begin{itemize}
+\item inline code, such as \code{print("Hello world!")};
+\item programming language, such as \proglang{R}, \proglang{Python}, and
+  \proglang{C++};
+\item software package, such as \pkg{stats}, \pkg{utils}.
+\end{itemize}
+
+
+# Guide for Authors
+
+The following requirements must be followed as closely as possible. A
+technically acceptable manuscript that fails to follow these requirements may be
+returned for retyping, leading to delay in publication.We only accept
+submissions in PDF format. The Latex file must be provided after the manuscript
+is accepted.
+
+## Submission of Papers
+
+Submission of a manuscript must be the original work of the author(s) and have
+not been published elsewhere or under consideration for another publication, or
+a substantially similar form in any language.
+
+Authors are encouraged to recommend three to five individuals (including their
+research fields, e-mail, phone numbers and addresses) who are qualified to serve
+as referees for their paper.
+
+
+# A Placeholder Section
+
+\lipsum[4-7]
+
+# Citing References
+
+The citations are in the author-year format with the
+\texttt{chicago} bibstyle.
+
+<!-- A bibfile contains all the citations in -->
+<!-- bibtex format is prepared (see \texttt{JDSbib.bib}). Some characters -->
+<!-- in the title of the references needs to be protected so that the style -->
+<!-- file does not alter it. For example, in the bibtex entry for -->
+<!-- \citet{Pozd:etal:2017}, the ``B'' in ``Brownian'' and the ``E'' in -->
+<!-- ``estimation''  following the colon are protected. -->
+<!-- A book reference \citep[e;g.,][]{Kotz2001} should have an address field. -->
+
+
+Citations can be in either text or parenthesis format style with
+\texttt{$\backslash$citet} or \texttt{$\backslash$citep},
+respectively. For example, \citet{KoenkerBassett1978} is a seminal
+work on quantile regression; The Laplace distribution has applications
+in many fields \citep{Kotz2001}.
+
+
+# Discussion
+
+\lipsum[1-3]

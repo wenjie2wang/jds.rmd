@@ -1,7 +1,7 @@
 Package: jds.rmd
 Title: R Markdown Templates for Journal of Data Science
 Version: 0.1.0
-Date: 2020-04-08
+Date: 2020-04-19
 Authors@R: c(
     person(given = "Wenjie", family = "Wang",
            email = "wjwang.stat@gmail.com",
@@ -16,6 +16,7 @@ Description:
 Depends:
     R (>= 3.2.3)
 Imports:
+    bookdown,
     rmarkdown
 License: GPL (>= 3)
 LazyData: true

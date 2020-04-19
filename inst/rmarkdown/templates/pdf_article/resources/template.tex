@@ -1,0 +1,66 @@
+\documentclass[$for(classoption)$$classoption$$sep$,$endfor$]{jds}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% the following edits should be done by Journal typesetters
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% set the first page number
+\setcounter{page}{100}
+\jdsmonth{July}
+\jdsyear{2020}
+\jdsvolume{xx}
+\jdsissue{xx}
+\jdsdoi{xx.xxxx/xxxxxxxxx}
+%% manually set running header for a shorter list of authors if needed
+% \shortauthors{Author A, et al.}
+
+\usepackage[utf8]{inputenc}
+
+\title$if(short-title)$[$short-title$]$endif${$title$}
+$for(author)$
+\author[$author.marker$]{$author.name$}
+$endfor$
+$for(affiliation)$
+\affil[$affiliation.marker$]{$affiliation.name$}
+$endfor$
+
+% Pandoc header
+$for(header-includes)$
+$header-includes$
+$endfor$
+
+$preamble$
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+$abstract$
+\end{abstract}
+
+\begin{keywords}
+$for(keywords)$$keywords$$sep$; $endfor$.
+\end{keywords}
+
+$body$
+
+$if(natbib)$
+$if(bibliography)$
+$if(biblio-title)$
+$if(book-class)$
+\renewcommand\bibname{$biblio-title$}
+$else$
+\renewcommand\refname{$biblio-title$}
+$endif$
+$endif$
+\bibliography{$for(bibliography)$$bibliography$$sep$,$endfor$}
+\bibliographystyle{chicago}
+$endif$
+$endif$
+
+$if(biblatex)$
+\printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
+$endif$
+
+\end{document}
+
