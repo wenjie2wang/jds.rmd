@@ -34,7 +34,7 @@ keywords:
   - Keyword B
   - Keyword C
   - Keyword D
-bibliography: jds-draft.bib
+bibliography: jds-sample.bib
 output: jds.rmd::pdf_article
 ---
 
