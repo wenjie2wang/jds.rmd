@@ -130,7 +130,7 @@
 {\par}
 
 \newenvironment{keywords}
-{\textbf{Keywords}\,\begin{itshape}}
+{\medskip\noindent\textbf{Keywords}\,\begin{itshape}}
 {\end{itshape}}
 
 % packages
@@ -236,7 +236,7 @@
 \fi
 
 \setlength{\parskip}{0ex plus0.1ex minus0.1ex}
-\setlength{\parindent}{0em}
+\setlength{\parindent}{2em}
 \setlength{\bibsep}{0em}
 
 %% taken and modified from jss.dtx
