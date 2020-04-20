@@ -15,4 +15,4 @@ need.packages <- function (pkgs, repos = getOption("repos"), ...)
 }
 
 ## the current version of package needs rmarkdown and revealjs
-need.packages(c("rmarkdown"))
+need.packages(c("rmarkdown", "bookdown"))
