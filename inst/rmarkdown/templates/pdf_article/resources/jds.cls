@@ -45,7 +45,9 @@
 
 \if@review
 \LoadClass[12pt,twoside]{article}
-\renewcommand{\baselinestretch}{1.8}
+\RequirePackage{setspace}
+\doublespacing
+% \renewcommand{\baselinestretch}{1.8}
 \RequirePackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
 % end of \if@review
 \else
