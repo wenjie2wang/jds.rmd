@@ -62,7 +62,11 @@
 \def\@titleone#1{\gdef\@title{{#1}}\gdef\@shorttitle{{#1}}}
 
 \newcommand\shorttitle{\gdef\@shorttitle}
+\newcommand\jdsreceived{\gdef\@jdsreceived}
+\newcommand\jdsaccepted{\gdef\@jdsaccepted}
 \shorttitle{}
+\jdsreceived{April 20, 2020}
+\jdsaccepted{April 28, 2020}
 
 %% revised maketitle of article.cls
 %% does not reset title etc
@@ -149,7 +153,8 @@
 
 \RequirePackage[noblocks]{authblk}
 \setlength{\affilsep}{0.5em}
-\renewcommand\Authfont{\bf}
+\renewcommand\Authfont{\bf\scshape}
+\renewcommand\Affilfont{\mdseries\slshape\small}
 
 % \RequirePackage{amsmath}
 % \numberwithin{equation}{section}
@@ -159,6 +164,7 @@
 % for running head of author information
 \newcommand*{\runningauthors}{%
   \begingroup
+    \let\thanks\@gobble% ignore \thanks
     \let\footnote\@gobble% ignore \footnote
     \let\textsuperscript\@gobble% ignore protected \textsuperscript
     \expandafter\let\csname textsuperscript \endcsname\@gobble
@@ -211,7 +217,9 @@
     \@jdsmonth\ \@jdsyear
   }
   \fancyhead[R]{\footnotesize DOI:\ \@jdsdoi\\}
-  \fancyfoot[C]{\thepage}%
+  \fancyfoot[L]{\thepage}% number of the first page
+  \fancyfoot[R]{\footnotesize
+    Received on \@jdsreceived; Accepted on \@jdsaccepted}
 }
 
 \if@review
