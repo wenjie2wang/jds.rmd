@@ -25,7 +25,7 @@ The latest version of the package can be installed it by using **remotes** (or
 
 ```R
 if (! require(remotes)) install.packages("remotes")
-remotes::install_gitlab("wenjie2wang/jds.rmd")
+remotes::install_gitlab("jdatasci/jds.rmd")
 ```
 
 ### Option 3
@@ -33,7 +33,7 @@ remotes::install_gitlab("wenjie2wang/jds.rmd")
 It is also possible to install the package by the following bash commands.
 
 ```bash
-git clone git@gitlab.com:wenjie2wang/jds.rmd.git
+git clone git@gitlab.com:jdatasci/jds.rmd.git
 make -C jds.rmd install
 ```
 

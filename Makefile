@@ -30,15 +30,6 @@ pkgdown:
 	@Rscript -e "options(pkgdown.internet = FALSE);\
 	pkgdown::build_site();"
 
-
-.PHONY: rs-connect
-rs-connect:
-	@Rscript misc/rs-connect.R
-
-.PHONY: publish-docs
-publish-docs:
-	@scp -r docs/* hpclogin:~/ShinyApps/$(pkg)/
-
 $(tar): $(objects)
 	@Rscript -e "library(methods);" \
 	-e "devtools::document();";
