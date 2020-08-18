@@ -1,7 +1,8 @@
 ## when the package is loaded
-.texinputs <- NULL
+.texinputs <- .bstbinputs <- NULL
 .onLoad <- function(libname, pkgname) {
     .texinputs <<- texinputs()
+    .bstinputs <<- bstinputs()
 
     invisible()
 }

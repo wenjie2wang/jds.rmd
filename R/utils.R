@@ -53,3 +53,33 @@ texinputs <- function() {
         reset = reset
     )
 }
+
+bstinputs <- function() {
+    res_dir <- system.file(
+        "rmarkdown", "templates", "pdf_article", "resources",
+        package = "jds.rmd"
+    )
+    ## set environment variable TEXINPUTS to include style files
+    ## without copy them to the working directory
+    old_bstinputs <- Sys.getenv("BSTINPUTS")
+    old_bstinputs_vec <- do.call(
+        c, strsplit(old_bstinputs, split = ":", fixed = TRUE)
+    )
+    add_bstinputs <- paste0(res_dir, ":")
+    ## helper functions
+    set <- function() {
+        if (! res_dir %in% old_bstinputs_vec) {
+            Sys.setenv(BSTINPUTS = paste0(add_bstinputs, old_bstinputs))
+        }
+        invisible()
+    }
+    reset <- function() {
+        Sys.setenv(BSTINPUTS = old_bstinputs)
+        invisible()
+    }
+    ## return
+    list(
+        set = set,
+        reset = reset
+    )
+}

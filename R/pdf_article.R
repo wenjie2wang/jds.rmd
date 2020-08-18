@@ -21,7 +21,9 @@ pdf_article <- function(...)
     post_fun_list <- as.list(body(out_post_fun))
     where_return <- length(post_fun_list)
     post_fun_list <- c(post_fun_list, post_fun_list[where_return])
-    post_fun_list[[where_return]] <- quote(.texinputs$reset())
+    post_fun_list[[where_return]] <- quote({
+        .texinputs$reset(); .bstinputs$reset()
+    })
     body(out$post_processor) <- as.call(post_fun_list)
 
     ## return
@@ -42,8 +44,9 @@ jds_pdf_document <- function(...,
         ...
     )
 
-    ## set TEXINPUTS
+    ## set TEXINPUTS and BIBINPUTS
     .texinputs$set()
+    .bstinputs$set()
 
     ## FIXME: get optional arguments
     dots_list <- list(...)
