@@ -1,29 +1,46 @@
 % Journal of Data Science document class file
-% v0.1.0 for LaTeX 2e
+% v0.1.5 for LaTeX 2e
 %
 % Copyright (C) 2020 Journal of Data Science Editorial Office
+% Developed by Wenjie Wang <https://wenjie-stat.me>
 %
-
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.3
+% of this license or (at your option) any later version.
+% The latest version of this license is in
+%   <http://www.latex-project.org/lppl.txt>
+% and version 1.3 or later is part of all distributions of LaTeX
+% version 2005/12/01 or later.
+%
+% This work has the LPPL maintenance status `maintained'.
+%
+% The Current Maintainer of this work is Wenjie Wang.
+%
+% This work consists of the file jds.cls.
+%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{jds}[2020/04/11 v0.1.0 Journal of Data Science document class]
+\ProvidesClass{jds}[2020/08/06 v0.1.5 Journal of Data Science document class]
 
 % options
 \newif\if@review
 \newif\if@inpress
 \newif\if@discussion
 \newif\if@chinese
+\newif\if@linenumber
 
 % defaults
 \@reviewtrue
 \@inpressfalse
 \@discussionfalse
 \@chinesefalse
+\@linenumberfalse
 
 % only one of review and inpress can be true
-\DeclareOption{review}{\@reviewtrue \@inpressfalse}
+\DeclareOption{review}{\@reviewtrue \@inpressfalse \@linenumbertrue}
 \DeclareOption{inpress}{\@reviewfalse \@inpresstrue}
 \DeclareOption{discussion}{\@discussiontrue}
 \DeclareOption{chinese}{\@chinesetrue \@discussiontrue}
+\DeclareOption{linenumber}{\@linenumbertrue}
 
 % other options from article.cls
 \DeclareOption{a4paper}
@@ -69,8 +86,34 @@
 \fi
 
 \if@chinese
-\RequirePackage[UTF8]{ctex}
+%% By default, scheme = chinese, which changes line space and font size.
+%% see the manual of ctex package for details
+\RequirePackage[UTF8,heading=true,scheme=plain]{ctex}
+\ctexset{
+  autoindent = true,
+  part/afterindent = true,
+  % chapter/afterindent = true,
+  section/afterindent = true,
+  subsection/afterindent = true,
+  subsubsection/afterindent = true,
+  paragraph/afterindent = true,
+  subparagraph/afterindent = true,
+  contentsname = {目录},
+  listfigurename = {插图},
+  indexname = {索引},
+  abstractname = {摘要},
+  figurename = {图},
+  tablename = {表},
+  appendixname = {附录},
+  bibname = {参考文献},
+  proofname = {证明}
+  % algorithmname = {算法}
+}
 \RequirePackage{xeCJK}
+\RequirePackage{setspace}
+\gdef\@pageprefix{S}
+\else
+\gdef\@pageprefix{}
 \fi
 
 %% reference: biom.cls for short title
@@ -99,8 +142,14 @@
       \if\disfirstpage0
         \thispagestyle{firstpage}
         \gdef\disfirstpage{1}
+        \xdef\@discussionfirstpage{\thepage}
       \else
-        \thispagestyle{fancy}
+        \if@chinese
+          \gdef\disfirstpage{2}
+          \thispagestyle{chfirstpage}
+        \else
+           \thispagestyle{doipage}
+        \fi
       \fi
     \else
       \newpage
@@ -134,6 +183,10 @@
   \setcounter{equation}{0}
   %% reset thanks
   \global\let\@thanks\@empty
+  %% set running head be authors
+  \ifx\@shortauthors\empty
+    \runningauthors
+  \fi
 }
 \def\@maketitle{%
   \if@discussion
@@ -164,10 +217,14 @@
 {%
   % \@beginparpenalty\@lowpenalty
   \begin{center}%
-    \ifnum\value{page}=1
-      \bfseries Abstract
+    \if@chinese
+      \if\disfirstpage1
+        \bfseries Abstract
+      \else
+        \bfseries \abstractname
+      \fi
     \else
-      \bfseries \abstractname
+      \bfseries Abstract
     \fi
     % \@endparpenalty
   \end{center}
@@ -177,7 +234,7 @@
 \newcommand\keywordsname{
   \gdef\@keywordsname{Keywords}
   \if@chinese
-    \ifnum\value{page}>1
+    \if\disfirstpage2
     \gdef\@keywordsname{关键词}
     \fi
   \fi
@@ -186,13 +243,10 @@
 {\keywordsname\medskip\noindent\textbf{\@keywordsname}\,\begin{itshape}}
 {\end{itshape}}
 
-
-\newcommand\shorttitle{\gdef\@shorttitle}
 \newcommand\jdsreceived{\gdef\@jdsreceived}
 \newcommand\jdsaccepted{\gdef\@jdsaccepted}
-\shorttitle{}
-\jdsreceived{April, 2020}
-\jdsaccepted{May, 2020}
+\jdsreceived{}
+\jdsaccepted{}
 
 
 % packages
@@ -204,10 +258,12 @@
 
 \RequirePackage[colorlinks=true,citecolor=blue]{hyperref}
 \RequirePackage[authoryear,round]{natbib}
+\RequirePackage{refcount}
 \RequirePackage{lastpage}
 
 \RequirePackage{enumitem}
-\setlist{nosep}
+\setlist{nosep, leftmargin=1.5em, labelwidth=0.25em}
+\raggedbottom
 
 \RequirePackage[noblocks]{authblk}
 \setlength{\affilsep}{0.5em}
@@ -215,57 +271,54 @@
 \renewcommand\Affilfont{\mdseries\slshape\small}
 
 % for running head of author information
-\gdef\runningauthors{%
+\newcommand\runningauthors{%
   \begingroup
   \let\thanks\@gobble% ignore \thanks
   \let\footnote\@gobble% ignore \footnote
   \let\textsuperscript\@gobble% ignore protected \textsuperscript
   \expandafter\let\csname textsuperscript \endcsname\@gobble
-  \let\Authfont\relax% do not use a special font
-  \if@chinese
-    \def\Authand{和}
-  \else
-    \def\Authand{ and }
-  \fi
-  \AB@authlist% show them all
+  \def\Authfont{}% do not use a special font
+  \xdef\@shortauthors{\AB@authlist}
   \endgroup
 }
 \newcommand\shortauthors{\gdef\@shortauthors}
-\shortauthors{\runningauthors}
+\shortauthors{}
 
 \if@discussion
 \RequirePackage{subfiles}
-\RequirePackage{bibunits}
-\defaultbibliographystyle{chicago}
-\RequirePackage{etoolbox}
-\AtEndPreamble{
-  \ifx\@shortauthors\empty
-    \shortauthors{\runningauthors}
-  \else
+\if@chinese
   \relax
-  \fi
-}
+\else
+  \RequirePackage{bibunits}
+  \defaultbibliographystyle{jds} % chicago}
+\fi
 \def\jdsrule{
-  \newdimen\spaceleft
-  \spaceleft=\dimexpr\textheight-\pagetotal\relax
   \if@chinese
-  \newpage
-  \if@chinese
-    \renewcommand\Authand{和}
-    \renewcommand\Authands{, 以及}
-  \fi
-  \else
-    \ifdim\spaceleft>20\baselineskip
-    \bigskip
-    \noindent\rule{\textwidth}{1.5pt}
-    \else
     \newpage
+    \renewcommand\Authsep{，}
+    \renewcommand\Authand{，}
+    \renewcommand\Authands{，}
+    \if@inpress
+      \onehalfspacing
     \fi
+  \else
+    \if@discussion
+      \label{\@jdsdoi}
+    \fi
+    % \newdimen\spaceleft
+    % \spaceleft=\dimexpr\textheight-\pagetotal\relax
+    % \ifdim\spaceleft>20\baselineskip
+    %   \bigskip
+    %   \noindent\rule{\textwidth}{1.5pt}
+    % \else
+      \newpage
+    % \fi
   \fi
   % reset author and affiliation block
   \global\let\AB@authors\@empty
   \global\let\AB@authlist\@empty
   \global\let\AB@affillist\@empty
+  \shortauthors{}
   \setcounter{authors}{0}
 }
 \fi
@@ -275,22 +328,32 @@
 
 \newcommand\jdsvolume{\gdef\@jdsvolume}
 \jdsvolume{xx}
-
 \newcommand\jdsissue{\gdef\@jdsissue}
 \jdsissue{xx}
-
 \newcommand\jdsmonth{\gdef\@jdsmonth}
 \jdsmonth{July}
 
 \newcommand\jdsyear{\gdef\@jdsyear}
 \jdsyear{2020}
+\newcommand\jdsdoi[1]{
+  \gdef\@jdsdoi{\detokenize{#1}}
+}
+\jdsdoi{xx.xxxx/xxxx_xxxx}
 
-\newcommand\jdsdoi{\gdef\@jdsdoi}
-\jdsdoi{xx.xxxx/xxxxxxxx}
+% define more for Chinese title page
+\if@chinese
+\newcommand\jdsmonthnum{\gdef\@jdsmonthnum}
+\jdsmonthnum{7}
+\newcommand\jdsreceivedch{\gdef\@jdsreceivedch}
+\newcommand\jdsacceptedch{\gdef\@jdsacceptedch}
+\jdsreceivedch{}
+\jdsacceptedch{}
+\fi
 
 % defaults
 \title{My JDS Paper Title}
-\def\@shorttitle{\@title}
+\newcommand\shorttitle{\gdef\@shorttitle}
+\shorttitle{\@title}
 
 %% define header and footer
 \RequirePackage{fancyhdr}
@@ -299,7 +362,7 @@
 \fancyhead{} % clear all header fields
 \fancyhead[CO]{\textit \@shorttitle}
 \fancyhead[CE]{\textit \@shortauthors}
-\fancyhead[LE,RO]{\thepage}
+\fancyhead[LE,RO]{\@pageprefix\thepage}
 \fancyfoot{} % clear all footer fields
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\footrulewidth}{0pt}
@@ -309,16 +372,67 @@
   \fancyhf{}%
   \fancyhead[L]{\footnotesize {\scshape Journal of Data Science}
     \@jdsvolume\ (\@jdsissue),
-    \thepage--\pageref*{LastPage}\\
+    \IfRefUndefinedExpandable{\@jdsdoi}{
+      \@pageprefix\thepage--\@pageprefix\pageref*{LastPage}\\
+    }{
+      \@pageprefix\thepage--\@pageprefix\pageref*{\@jdsdoi}\\
+    }
     \@jdsmonth\ \@jdsyear
   }
   \fancyhead[R]{\footnotesize DOI:\ \@jdsdoi\\}
-  \fancyfoot[LE,RO]{\thepage}% number of the first page
+  \fancyfoot[LE,RO]{\@pageprefix\thepage}% number of the first page
   \fancyfoot[RE,LO]{\footnotesize
-    Received \@jdsreceived; Accepted \@jdsaccepted}
+    \ifx\@jdsreceived\empty
+    \else
+      \ifx\@jdsaccepted\empty
+      \else
+        Received \@jdsreceived; Accepted \@jdsaccepted
+      \fi
+    \fi
+  }
 }
+\if@discussion
+\fancypagestyle{doipage}{%
+  \renewcommand{\headrulewidth}{0pt}%
+  \fancyhf{}%
+  \fancyhead[L]{\footnotesize {\scshape Journal of Data Science}
+    \@jdsvolume\ (\@jdsissue),
+    % \@discussionfirstpage--\pageref*{LastPage}\\
+    \IfRefUndefinedExpandable{\@jdsdoi}{
+      \@pageprefix\thepage--\pageref*{LastPage}\\
+    }{
+      \@pageprefix\thepage--\pageref*{\@jdsdoi}\\
+    }
+    \@jdsmonth\ \@jdsyear
+  }
+  \fancyhead[R]{\footnotesize DOI:\ \@jdsdoi\\}
+  \fancyfoot[LE,RO]{\@pageprefix\thepage}% number of the page
+}
+\fi
+\if@chinese
+\fancypagestyle{chfirstpage}{%
+  \renewcommand{\headrulewidth}{0pt}%
+  \fancyhf{}%
+  \fancyhead[L]{\footnotesize {\scshape Journal of Data Science}
+    \@jdsvolume\ (\@jdsissue),
+    \@pageprefix\@discussionfirstpage--\@pageprefix\pageref*{LastPage}\\
+    \@jdsyear 年 \@jdsmonthnum 月
+  }
+  \fancyhead[R]{\footnotesize DOI:\ \@jdsdoi\\}
+  \fancyfoot[LE,RO]{\@pageprefix\thepage}% number of the first page
+  \fancyfoot[RE,LO]{\footnotesize
+    \ifx\@jdsreceivedch\empty
+    \else
+      \ifx\@jdsacceptedch\empty
+      \else
+        投稿于 \@jdsreceivedch; 接收于 \@jdsacceptedch
+      \fi
+    \fi
+  }
+}
+\fi
 
-\if@review
+\if@linenumber
 \RequirePackage[pagewise,mathlines]{lineno}
 \linenumbers*[1]
 %% patches to make lineno work better with amsmath
@@ -350,6 +464,14 @@
 \let\proglang\textsf
 \newcommand{\pkg}[1]{{\fontshape{it}\selectfont #1}}
 
+% control floats
+% \renewcommand\floatpagefraction{.95}
+% \renewcommand\topfraction{.95}
+% \renewcommand\bottomfraction{.95}
+% \renewcommand\textfraction{.1}
+% \setcounter{totalnumber}{50}
+% \setcounter{topnumber}{50}
+% \setcounter{bottomnumber}{50}
 
 
 \endinput
