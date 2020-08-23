@@ -127,7 +127,7 @@ as referees for their paper.
 # Citing References
 
 The citations are in the author-year format with the
-\texttt{chicago} bibstyle.
+\texttt{jds} bibstyle.
 
 <!-- A bibfile contains all the citations in -->
 <!-- bibtex format is prepared (see \texttt{JDSbib.bib}). Some characters -->
