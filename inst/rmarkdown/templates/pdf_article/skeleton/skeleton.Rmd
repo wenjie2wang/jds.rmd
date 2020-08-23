@@ -1,26 +1,28 @@
 ---
 title: My Long JDS paper title
-# optional short title
-short-title: My Short JDS paper title
+short-title: My Short JDS paper title # optional short title
+short-authors: Ahen, et al.           # optional short author list
 author:
-  - name: Author A
+  - name: "Adam Ahen\\thanks{Corresponding author. Email: foo1@bar.com}"
     marker: '1,2'
-  - name: Author B
+  - name: Brett Berger
     marker: 2
-  - name: Author C
+  - name: Carl Camp
     marker: 3
-  - name: Author D
+  - name: David Dodge
     marker: 3
 affiliation:
-  - name: Institution A
+  - name: >
+      Department of Statistics, University of Achievement, Street
+      Address, Country
     marker: 1
   - name: Institution B
     marker: 2
   - name: Institution C
     marker: 3
 classoption:
-  - letterpaper # or a4paper
-  - inpress     # or inpress
+  - letterpaper # or a4paper, etc.
+  - inpress     # or review
 preamble: >
   \usepackage{amsfonts,amsmath,amssymb,amsthm}
   \usepackage{booktabs}
