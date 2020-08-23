@@ -10,8 +10,10 @@
 \jdsvolume{xx}
 \jdsissue{xx}
 \jdsdoi{xx.xxxx/xxxxxxxxx}
-%% manually set running header for a shorter list of authors if needed
-% \shortauthors{Author A, et al.}
+
+$if(short-authors)$
+\shortauthors{$short-authors$}
+$endif$
 
 \usepackage[utf8]{inputenc}
 
