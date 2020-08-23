@@ -2,7 +2,7 @@
 % v0.1.5 for LaTeX 2e
 %
 % Copyright (C) 2020 Journal of Data Science Editorial Office
-% Developed by Wenjie Wang <https://wenjie-stat.me>
+% Developed by Wenjie Wang <https://wwenjie.org/>
 %
 % This work may be distributed and/or modified under the
 % conditions of the LaTeX Project Public License, either version 1.3
