@@ -4,13 +4,42 @@
 %% the following edits should be done by Journal typesetters
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % set the first page number
-\setcounter{page}{100}
+$if(firstpage)$
+\setcounter{page}{$firstpage$}
+$else$
+\setcounter{page}{1}
+$endif$
+% set month
+$if(month)$
+\jdsmonth{$month$}
+$else$
 \jdsmonth{July}
+$endif$
+% set year
+$if(year)$
+\jdsyear{$year$}
+$else$
 \jdsyear{2020}
+$endif$
+% set volume
+$if(volume)$
+\jdsvolume{$volume$}
+$else$
 \jdsvolume{xx}
+$endif$
+% set issue
+$if(issue)$
+\jdsissue{$issue$}
+$else$
 \jdsissue{xx}
+$endif$
+% set doi: FIXME not support underscore
+$if(doi)$
+\jdsdoi{$doi$}
+$else$
 \jdsdoi{xx.xxxx/xxxxxxxxx}
-
+$endif$
+% set short-authors
 $if(short-authors)$
 \shortauthors{$short-authors$}
 $endif$
