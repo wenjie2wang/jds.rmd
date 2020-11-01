@@ -1,7 +1,7 @@
 Package: jds.rmd
 Title: R Markdown Templates for Journal of Data Science
 Version: 0.1.0.9000
-Date: 2020-08-22
+Date: 2020-11-01
 Authors@R: c(
     person(given = "Wenjie", family = "Wang",
            email = "wang@wwenjie.org",
@@ -12,7 +12,7 @@ Authors@R: c(
     )
 Description:
     Customized R Markdown templates and formats for authoring and
-    submitting articles to Journal of Data Science (JDS).
+    submitting articles to Journal of Data Science.
 Depends:
     R (>= 3.2.3)
 Imports:
@@ -20,7 +20,7 @@ Imports:
     rmarkdown
 License: GPL (>= 3)
 LazyData: true
-URL: https://https://gitlab.com/wenjie2wang/jds.rmd
-BugReports: https://https://gitlab.com/wenjie2wang/jds.rmd/issues
+URL: https://github.com/wenjie2wang/jds.rmd
+BugReports: https://github.com/wenjie2wang/jds.rmd/issues
 Encoding: UTF-8
 RoxygenNote: 7.1.1
