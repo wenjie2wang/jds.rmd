@@ -13,6 +13,7 @@
 ^\.\#
 ^\.clang_complete$
 ^\.git$
+^\.github$
 ^\.gitlab-ci\.yml$
 ^\.travis\.yml$
 ^_pkgdown\.yml$
@@ -21,5 +22,4 @@
 ^misc$
 ^reference$
 ^working$
-^apache-license-2.0.md$
 ~$
