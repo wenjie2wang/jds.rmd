@@ -1,6 +1,8 @@
 # jds.rmd
 
 [![CRAN_Status_Badge][r-pkg-badge]][cran-url]
+[![R build status](https://github.com/wenjie2wang/jds.rmd/workflows/R-CMD-check/badge.svg)](https://github.com/wenjie2wang/jds.rmd/actions)
+
 
 ## Overview
 
@@ -25,22 +27,13 @@ The latest version of the package can be installed it by using **remotes** (or
 
 ```R
 if (! require(remotes)) install.packages("remotes")
-remotes::install_gitlab("jdatasci/jds.rmd")
-```
-
-### Option 3
-
-It is also possible to install the package by the following bash commands.
-
-```bash
-git clone git@gitlab.com:jdatasci/jds.rmd.git
-make -C jds.rmd install
+remotes::install_github("wenjie2wang/jds.rmd")
 ```
 
 ## Getting Started
 
-After we have installed the package, we may start writing a new manuscript from
-a sample R markdown file created by `rmarkdown::draft()` and render it to PDF by
+After installing the package, we may start writing a new manuscript from a
+sample R markdown file created by `rmarkdown::draft()` and render it to PDF by
 `rmarkdown::render()`as follows:
 
 ```R
@@ -50,8 +43,6 @@ rmarkdown::draft("jds-sample.Rmd", template = "pdf_article",
 ## produce pdf with the tex source kept for submission
 rmarkdown::render("jds-sample.Rmd")
 ```
-
-
 
 [r-pkg-badge]: https://www.r-pkg.org/badges/version/jds.rmd
 [cran-url]: https://CRAN.R-project.org/package=jds.rmd
