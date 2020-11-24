@@ -473,5 +473,9 @@
 % \setcounter{topnumber}{50}
 % \setcounter{bottomnumber}{50}
 
+\RequirePackage{marginnote}
+% \reversemarginpar
+\setlength{\marginparwidth}{2.4cm}
+
 
 \endinput
