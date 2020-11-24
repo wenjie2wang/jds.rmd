@@ -1,7 +1,7 @@
 # jds.rmd
 
 [![CRAN_Status_Badge][r-pkg-badge]][cran-url]
-[![R build status](https://github.com/wenjie2wang/jds.rmd/workflows/R-CMD-check/badge.svg)](https://github.com/wenjie2wang/jds.rmd/actions)
+[![R build status][gha-icon]][gha-url]
 
 
 ## Overview
@@ -22,12 +22,11 @@ install.packages("jds.rmd")
 
 ### Option 2
 
-The latest version of the package can be installed it by using **remotes** (or
-**devtools**):
+The latest version of the package can be installed by using **remotes**:
 
 ```R
 if (! require(remotes)) install.packages("remotes")
-remotes::install_github("wenjie2wang/jds.rmd")
+remotes::install_github("wenjie2wang/jds.rmd", upgrade = "never")
 ```
 
 ## Getting Started
@@ -46,3 +45,5 @@ rmarkdown::render("jds-sample.Rmd")
 
 [r-pkg-badge]: https://www.r-pkg.org/badges/version/jds.rmd
 [cran-url]: https://CRAN.R-project.org/package=jds.rmd
+[gha-icon]: https://github.com/wenjie2wang/jds.rmd/workflows/R-CMD-check/badge.svg
+[gha-url]: https://github.com/wenjie2wang/jds.rmd/actions
