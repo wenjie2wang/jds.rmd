@@ -1,5 +1,5 @@
 % Journal of Data Science document class file
-% v0.1.5 for LaTeX 2e
+% v0.1.6 for LaTeX 2e
 %
 % Copyright (C) 2020 Journal of Data Science Editorial Office
 % Developed by Wenjie Wang <https://wwenjie.org/>
@@ -19,7 +19,7 @@
 % This work consists of the file jds.cls.
 %
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{jds}[2020/08/06 v0.1.5 Journal of Data Science document class]
+\ProvidesClass{jds}[2020/11/25 v0.1.6 Journal of Data Science document class]
 
 % options
 \newif\if@review
@@ -335,6 +335,8 @@
 
 \newcommand\jdsyear{\gdef\@jdsyear}
 \jdsyear{2020}
+\newcommand\jdssection{\gdef\@jdssection}
+\jdssection{}
 \newcommand\jdsdoi[1]{
   \gdef\@jdsdoi{\detokenize{#1}}
 }
@@ -379,7 +381,10 @@
     }
     \@jdsmonth\ \@jdsyear
   }
-  \fancyhead[R]{\footnotesize DOI:\ \@jdsdoi\\}
+  \fancyhead[R]{\footnotesize
+      DOI:\ \@jdsdoi\\
+      \@jdssection
+  }
   \fancyfoot[LE,RO]{\@pageprefix\thepage}% number of the first page
   \fancyfoot[RE,LO]{\footnotesize
     \ifx\@jdsreceived\empty
@@ -456,6 +461,7 @@
 \fi
 
 \setlength{\parskip}{0ex plus0.1ex minus0.1ex}
+% \setlength{\parskip}{\baselineskip}
 \setlength{\parindent}{2em}
 \setlength{\bibsep}{0em}
 
