@@ -48,7 +48,10 @@ $if(highlighting-macros)$
 $highlighting-macros$
 $endif$
 
+% for pandoc
 \usepackage[utf8]{inputenc}
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 
 \title$if(short-title)$[$short-title$]$endif${$title$}
 $for(author)$
