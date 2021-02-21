@@ -1,7 +1,7 @@
 % Journal of Data Science document class file
-% v0.1.6 for LaTeX 2e
+% v0.1.7 for LaTeX 2e
 %
-% Copyright (C) 2020 Journal of Data Science Editorial Office
+% Copyright (C) 2020-2021 Journal of Data Science Editorial Office
 % Developed by Wenjie Wang <https://wwenjie.org/>
 %
 % This work may be distributed and/or modified under the
@@ -19,7 +19,7 @@
 % This work consists of the file jds.cls.
 %
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{jds}[2020/11/25 v0.1.6 Journal of Data Science document class]
+\ProvidesClass{jds}[2021/02/09 v0.1.7 Journal of Data Science document class]
 
 % options
 \newif\if@review
@@ -27,6 +27,7 @@
 \newif\if@discussion
 \newif\if@chinese
 \newif\if@linenumber
+\newif\if@supp
 
 % defaults
 \@reviewtrue
@@ -34,6 +35,7 @@
 \@discussionfalse
 \@chinesefalse
 \@linenumberfalse
+\@suppfalse
 
 % only one of review and inpress can be true
 \DeclareOption{review}{\@reviewtrue \@inpressfalse \@linenumbertrue}
@@ -41,6 +43,7 @@
 \DeclareOption{discussion}{\@discussiontrue}
 \DeclareOption{chinese}{\@chinesetrue \@discussiontrue}
 \DeclareOption{linenumber}{\@linenumbertrue}
+\DeclareOption{supp}{\@supptrue}
 
 % other options from article.cls
 \DeclareOption{a4paper}
@@ -115,6 +118,9 @@
 \else
 \gdef\@pageprefix{}
 \fi
+
+%% JY 2021Feb05: no need for prefix S to articles in Chinese
+\gdef\@pageprefix{}
 
 %% reference: biom.cls for short title
 \def\title{\@ifnextchar [{\@titletwo}{\@titleone}}
@@ -369,6 +375,13 @@
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\footrulewidth}{0pt}
 
+\if@supp
+\fancypagestyle{firstpage}{%
+  \renewcommand{\headrulewidth}{0pt}%
+  \fancyhf{}%
+  \fancyfoot[LE,RO]{\@pageprefix\thepage}% number of the first page
+}
+\else
 \fancypagestyle{firstpage}{%
   \renewcommand{\headrulewidth}{0pt}%
   \fancyhf{}%
@@ -382,20 +395,21 @@
     \@jdsmonth\ \@jdsyear
   }
   \fancyhead[R]{\footnotesize
-      DOI:\ \@jdsdoi\\
-      \@jdssection
+    DOI:\ \@jdsdoi\\
+    \@jdssection
   }
   \fancyfoot[LE,RO]{\@pageprefix\thepage}% number of the first page
   \fancyfoot[RE,LO]{\footnotesize
     \ifx\@jdsreceived\empty
     \else
-      \ifx\@jdsaccepted\empty
-      \else
-        Received \@jdsreceived; Accepted \@jdsaccepted
-      \fi
+    \ifx\@jdsaccepted\empty
+    \else
+    Received \@jdsreceived; Accepted \@jdsaccepted
+    \fi
     \fi
   }
 }
+\fi
 \if@discussion
 \fancypagestyle{doipage}{%
   \renewcommand{\headrulewidth}{0pt}%
@@ -415,28 +429,35 @@
 }
 \fi
 \if@chinese
-\fancypagestyle{chfirstpage}{%
-  \renewcommand{\headrulewidth}{0pt}%
-  \fancyhf{}%
-  \fancyhead[L]{\footnotesize {\scshape Journal of Data Science}
-    \@jdsvolume\ (\@jdsissue),
-    \@pageprefix\@discussionfirstpage--\@pageprefix\pageref*{LastPage}\\
-    \@jdsyear 年 \@jdsmonthnum 月
+  \if@supp
+  \fancypagestyle{chfirstpage}{
+    \renewcommand{\headrulewidth}{0pt}%
+    \fancyhf{}%
+    \fancyfoot[LE,RO]{\@pageprefix\thepage}% number of the first page
   }
-  \fancyhead[R]{\footnotesize DOI:\ \@jdsdoi\\}
-  \fancyfoot[LE,RO]{\@pageprefix\thepage}% number of the first page
-  \fancyfoot[RE,LO]{\footnotesize
-    \ifx\@jdsreceivedch\empty
-    \else
+  \else
+  \fancypagestyle{chfirstpage}{%
+    \renewcommand{\headrulewidth}{0pt}%
+    \fancyhf{}%
+    \fancyhead[L]{\footnotesize {\scshape Journal of Data Science}
+      \@jdsvolume\ (\@jdsissue),
+      \@pageprefix\@discussionfirstpage--\@pageprefix\pageref*{LastPage}\\
+      \@jdsyear 年 \@jdsmonthnum 月
+    }
+    \fancyhead[R]{\footnotesize DOI:\ \@jdsdoi\\}
+    \fancyfoot[LE,RO]{\@pageprefix\thepage}% number of the first page
+    \fancyfoot[RE,LO]{\footnotesize
+      \ifx\@jdsreceivedch\empty
+      \else
       \ifx\@jdsacceptedch\empty
       \else
-        投稿于 \@jdsreceivedch; 接收于 \@jdsacceptedch
+      投稿于 \@jdsreceivedch; 接收于 \@jdsacceptedch
       \fi
-    \fi
+      \fi
+    }
   }
-}
+  \fi
 \fi
-
 \if@linenumber
 \RequirePackage[pagewise,mathlines]{lineno}
 \linenumbers*[1]
