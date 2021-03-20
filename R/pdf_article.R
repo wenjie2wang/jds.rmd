@@ -3,8 +3,8 @@
 ##' Provides output format to render PDF article for submission to Journal of
 ##' Data Science.
 ##'
-##' @param ... Optional arguments passed to \code{bookdown::pdf_book()} other
-##'     than \code{base_format}.
+##' @param ... Optional named arguments passed to \code{bookdown::pdf_book()}
+##'     and \code{rmarkdown::pdf_document()} other than \code{base_format}.
 ##'
 ##' @return The output format that can only be used with
 ##'     \code{bookdown::render_book()}.
@@ -13,6 +13,7 @@
 ##'
 ##' @importFrom rmarkdown pdf_document pandoc_available
 ##' @importFrom bookdown pdf_book
+##'
 ##' @export
 pdf_article <- function(...)
 {
@@ -31,9 +32,10 @@ pdf_article <- function(...)
     out
 }
 
+
 jds_pdf_document <- function(...,
                              keep_tex = TRUE,
-                             citation_package = 'natbib')
+                             citation_package = "natbib")
 {
     ## reference: rticles::jss_article
     rmarkdown::pandoc_available("2.2", TRUE)
@@ -44,14 +46,9 @@ jds_pdf_document <- function(...,
         citation_package = citation_package,
         ...
     )
-
     ## set TEXINPUTS and BIBINPUTS
     .texinputs$set()
     .bstinputs$set()
-
-    ## FIXME: get optional arguments
-    dots_list <- list(...)
-
     ## return
     out
 }
