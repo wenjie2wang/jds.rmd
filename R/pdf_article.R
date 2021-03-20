@@ -3,7 +3,11 @@
 ##' Provides output format to render PDF article for submission to Journal of
 ##' Data Science.
 ##'
-##' @param ... FIXME: Other arguments.
+##' @param ... Optional arguments passed to \code{bookdown::pdf_book()} other
+##'     than \code{base_format}.
+##'
+##' @return The output format that can only be used with
+##'     \code{bookdown::render_book()}.
 ##'
 ##' @example inst/examples/pdf_article.R
 ##'
@@ -12,9 +16,7 @@
 ##' @export
 pdf_article <- function(...)
 {
-    ## FIXME: allow more options
     out <- bookdown::pdf_book(..., base_format = jds_pdf_document)
-
     ## eliminate the side effect by post_processor run by render function
     ## have to run after latemk of the post_processor
     out_post_fun <- out$post_processor
@@ -25,7 +27,6 @@ pdf_article <- function(...)
         .texinputs$reset(); .bstinputs$reset()
     })
     body(out$post_processor) <- as.call(post_fun_list)
-
     ## return
     out
 }
