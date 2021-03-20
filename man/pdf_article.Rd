@@ -7,14 +7,19 @@
 pdf_article(...)
 }
 \arguments{
-\item{...}{FIXME: Other arguments.}
+\item{...}{Optional named arguments passed to \code{bookdown::pdf_book()}
+and \code{rmarkdown::pdf_document()} other than \code{base_format}.}
+}
+\value{
+The output format that can only be used with
+    \code{bookdown::render_book()}.
 }
 \description{
 Provides output format to render PDF article for submission to Journal of
 Data Science.
 }
 \examples{
-if (interactive() && requireNamespace("rmarkdown")) {
+if (interactive() && requireNamespace("rmarkdown", quietly = TRUE)) {
     ## draft from a sample R markdown file
     rmarkdown::draft("jds-sample.Rmd", template = "pdf_article",
                      package = "jds.rmd", edit = FALSE)
