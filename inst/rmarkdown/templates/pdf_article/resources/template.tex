@@ -33,7 +33,7 @@ $if(issue)$
 $else$
 \jdsissue{xx}
 $endif$
-% set doi: FIXME not support underscore
+% set doi: FIXME: not support underscore
 $if(doi)$
 \jdsdoi{$doi$}
 $else$
@@ -72,13 +72,17 @@ $preamble$
 
 \maketitle
 
+$if(abstract)$
 \begin{abstract}
 $abstract$
 \end{abstract}
+$endif$
 
+$if(keywords)$
 \begin{keywords}
 $for(keywords)$$keywords$$sep$; $endfor$.
 \end{keywords}
+$endif$
 
 $body$
 
