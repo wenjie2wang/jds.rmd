@@ -1,5 +1,5 @@
 % Journal of Data Science document class file
-% v0.1.7 for LaTeX 2e
+% v0.1.8 for LaTeX 2e
 %
 % Copyright (C) 2020-2021 Journal of Data Science Editorial Office
 % Developed by Wenjie Wang <https://wwenjie.org/>
@@ -19,7 +19,7 @@
 % This work consists of the file jds.cls.
 %
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{jds}[2021/02/09 v0.1.7 Journal of Data Science document class]
+\ProvidesClass{jds}[2021/07/06 v0.1.8 Journal of Data Science document class]
 
 % options
 \newif\if@review
@@ -503,5 +503,10 @@
 % \reversemarginpar
 \setlength{\marginparwidth}{2.4cm}
 
+% figure and table number prefix for supplementary materials
+\if@supp
+\renewcommand{\thefigure}{S\arabic{figure}}
+\renewcommand{\thetable}{S\arabic{table}}
+\fi
 
 \endinput

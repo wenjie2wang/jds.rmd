@@ -1,6 +1,6 @@
 Package: jds.rmd
 Title: R Markdown Templates for Journal of Data Science
-Version: 0.1.0.9003
+Version: 0.1.0.9004
 Authors@R: c(
     person(given = "Wenjie", family = "Wang",
            email = "wang@wwenjie.org",
