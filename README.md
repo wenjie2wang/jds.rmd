@@ -6,9 +6,8 @@
 
 ## Overview
 
-**jds.rmd** is an R package providing templates in R Markdown for authoring
-manuscripts for submission to Journal of Data Science (JDS).
-
+The R package **jds.rmd** provides an R Markdown template for authoring
+manuscripts intended for [Journal of Data Science][jds-url] (JDS).
 
 ## Installation
 
@@ -47,3 +46,4 @@ rmarkdown::render("jds-sample.Rmd")
 [cran-url]: https://CRAN.R-project.org/package=jds.rmd
 [gha-icon]: https://github.com/wenjie2wang/jds.rmd/workflows/R-CMD-check/badge.svg
 [gha-url]: https://github.com/wenjie2wang/jds.rmd/actions
+[jds-url]: https://jds-online.org/journal/JDS
