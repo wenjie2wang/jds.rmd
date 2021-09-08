@@ -11,6 +11,8 @@
 ##'
 ##' @return The file name of the new document (invisibly).
 ##'
+##' @example inst/examples/pdf_article.R
+##'
 ##' @export
 draft <- function(file, cls = c("jdsart", "jds"))
 {
