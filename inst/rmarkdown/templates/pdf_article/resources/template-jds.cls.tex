@@ -1,0 +1,108 @@
+\documentclass[$for(classoption)$$classoption$$sep$,$endfor$]{jds}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% the following edits should be done by Journal typesetters
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% set the first page number
+$if(firstpage)$
+\setcounter{page}{$firstpage$}
+$else$
+\setcounter{page}{1}
+$endif$
+% set month
+$if(month)$
+\jdsmonth{$month$}
+$else$
+\jdsmonth{July}
+$endif$
+% set year
+$if(year)$
+\jdsyear{$year$}
+$else$
+\jdsyear{2020}
+$endif$
+% set volume
+$if(volume)$
+\jdsvolume{$volume$}
+$else$
+\jdsvolume{xx}
+$endif$
+% set issue
+$if(issue)$
+\jdsissue{$issue$}
+$else$
+\jdsissue{xx}
+$endif$
+% set doi: not support underscore now
+$if(doi)$
+\jdsdoi{$doi$}
+$else$
+\jdsdoi{xx.xxxx/xxxxxxxxx}
+$endif$
+% set short-authors
+$if(short-authors)$
+\shortauthors{$short-authors$}
+$endif$
+
+$if(highlighting-macros)$
+$highlighting-macros$
+$endif$
+
+% for pandoc
+\usepackage[utf8]{inputenc}
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+\title$if(short-title)$[$short-title$]$endif${$title$}
+$for(author)$
+\author[$author.marker$]{$author.name$}
+$endfor$
+$for(affiliation)$
+\affil[$affiliation.marker$]{$affiliation.name$}
+$endfor$
+
+% Pandoc header
+$for(header-includes)$
+$header-includes$
+$endfor$
+
+$preamble$
+
+\begin{document}
+
+\maketitle
+
+$if(abstract)$
+\begin{abstract}
+$abstract$
+\end{abstract}
+$endif$
+
+$if(keywords)$
+\begin{keywords}
+$for(keywords)$$keywords$$sep$; $endfor$.
+\end{keywords}
+$endif$
+
+$body$
+
+$if(natbib)$
+$if(bibliography)$
+$if(biblio-title)$
+$if(book-class)$
+\renewcommand\bibname{$biblio-title$}
+$else$
+\renewcommand\refname{$biblio-title$}
+$endif$
+$endif$
+\bibliography{$for(bibliography)$$bibliography$$sep$,$endfor$}
+\bibliographystyle{jds}
+$endif$
+$endif$
+
+$if(biblatex)$
+\printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
+$endif$
+
+\end{document}
+

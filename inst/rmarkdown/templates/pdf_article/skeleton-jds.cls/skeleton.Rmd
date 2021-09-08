@@ -1,42 +1,24 @@
 ---
 title: My Long JDS paper title
 short-title: My Short JDS paper title # optional short title
+short-authors: Ahen, et al.           # optional short author list
 author:
-  - first: Adam
-    first-init: A.
-    last: Ahen
+  - name: "Adam Ahen\\thanks{Corresponding author. Email: foo1@bar.com}"
     marker: '1,2'
-    thanks-ref: 1
-    email: foo@bar.com
-  - first: Brett
-    first-init: B.
-    last: Berger
+  - name: Brett Berger
     marker: 2
-    thanks-ref: 2
-  - first: Carl
-    first-init: C.
-    last: Camp
+  - name: Carl Camp
     marker: 3
-  - first: David
-    first-init: D.
-    last: Dodge
+  - name: David Dodge
     marker: 3
-thanks-text:
-  - content: Corresponding author
-    type: corresp
-    id: 1
-  - content: Simple footnote.
-    id: 2
 affiliation:
-  - institution: University of Achievement
-    prefix: Department A
-    country: Country A
+  - name: >
+      Department of Statistics, University of Achievement, Street
+      Address, Country
     marker: 1
-  - institution: Institution B
-    country: Country B
+  - name: Institution B
     marker: 2
-  - institution: Institution C
-    country: Country C
+  - name: Institution C
     marker: 3
 classoption:
   - letterpaper    # or a4paper, etc.
@@ -58,7 +40,9 @@ keywords:
   - MCMC
   - quantiles
 bibliography: jds-sample.bib
-output: jds.rmd::pdf_article
+output:
+  jds.rmd::pdf_article:
+    cls: jds
 ---
 
 

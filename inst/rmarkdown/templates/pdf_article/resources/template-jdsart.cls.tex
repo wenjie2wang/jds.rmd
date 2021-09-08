@@ -1,67 +1,44 @@
-\documentclass[$for(classoption)$$classoption$$sep$,$endfor$]{jds}
+\documentclass[$for(classoption)$$classoption$$sep$,$endfor$]{jdsart}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% the following edits should be done by Journal typesetters
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% set the first page number
 $if(firstpage)$
 \setcounter{page}{$firstpage$}
 $else$
 \setcounter{page}{1}
 $endif$
-% set month
 $if(month)$
-\jdsmonth{$month$}
+\pubmonth{$month$}
 $else$
-\jdsmonth{July}
+\pubmonth{July}
 $endif$
-% set year
 $if(year)$
-\jdsyear{$year$}
+\pubyear{$year$}
 $else$
-\jdsyear{2020}
+\pubyear{2020}
 $endif$
-% set volume
 $if(volume)$
-\jdsvolume{$volume$}
+\volume{$volume$}
 $else$
-\jdsvolume{xx}
+\volume{xx}
 $endif$
-% set issue
 $if(issue)$
-\jdsissue{$issue$}
+\issue{$issue$}
 $else$
-\jdsissue{xx}
+\issue{xx}
 $endif$
-% set doi: FIXME: not support underscore
 $if(doi)$
-\jdsdoi{$doi$}
+\doi{$doi$}
 $else$
-\jdsdoi{xx.xxxx/xxxxxxxxx}
-$endif$
-% set short-authors
-$if(short-authors)$
-\shortauthors{$short-authors$}
+\doi{0000}
 $endif$
 
 $if(highlighting-macros)$
 $highlighting-macros$
 $endif$
 
-% for pandoc
 \usepackage[utf8]{inputenc}
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 
-\title$if(short-title)$[$short-title$]$endif${$title$}
-$for(author)$
-\author[$author.marker$]{$author.name$}
-$endfor$
-$for(affiliation)$
-\affil[$affiliation.marker$]{$affiliation.name$}
-$endfor$
-
-% Pandoc header
 $for(header-includes)$
 $header-includes$
 $endfor$
@@ -69,8 +46,24 @@ $endfor$
 $preamble$
 
 \begin{document}
+\begin{frontmatter}
+$if(pretitle)$
+\pretitle{$pretitle$}
+$endif$
 
-\maketitle
+\title{$title$}
+$if(short-title)$\runtitle{$short-title$}$endif$
+
+$for(author)$
+\author[$author.marker$]{\inits{$author.first-init$}\fnms{$author.first$}\snm{$author.last$}$if(author.thanks-ref)$\thanksref{$author.thanks-ref$}$endif$$if(author.email)$\ead{$author.email$}$endif$}
+$endfor$
+
+$for(thanks-text)$
+\thankstext[$if(thanks-text.type)$type=$thanks-text.type$,$endif$id=$thanks-text.id$]{$thanks-text.content$}$endfor$
+
+$for(affiliation)$
+\address[$affiliation.marker$]{$if(affiliation.prefix)$$affiliation.prefix$,$endif$\institution{$affiliation.institution$},\cny{$affiliation.country$}}
+$endfor$
 
 $if(abstract)$
 \begin{abstract}
@@ -80,9 +73,11 @@ $endif$
 
 $if(keywords)$
 \begin{keywords}
-$for(keywords)$$keywords$$sep$; $endfor$.
+$for(keywords)$\kwd{$keywords$}$endfor$.
 \end{keywords}
 $endif$
+
+\end{frontmatter}
 
 $body$
 

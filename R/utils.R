@@ -16,9 +16,12 @@ find_resource <- function(template, file = 'template.tex') {
 pdf_document_format <-
     function(format,
              template = find_resource(format, 'template.tex'),
+             md_extensions = "-autolink_bare_uris",
              ...)
 {
-    fmt <- rmarkdown::pdf_document(..., template = template)
+    fmt <- rmarkdown::pdf_document(...,
+                                   template = template,
+                                   md_extensions = md_extensions)
     fmt$inherits <- "pdf_document"
     fmt
 }
