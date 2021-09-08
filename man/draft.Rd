@@ -23,3 +23,11 @@ Create a JDS article draft using the specified LaTeX class file.  This
 function is a simplified version of `rmarkdown::draft()` for creating a JDS
 article draft only.
 }
+\examples{
+if (interactive() && requireNamespace("rmarkdown", quietly = TRUE)) {
+    ## draft from a sample R markdown file
+    jds.rmd::draft("jds-sample.Rmd")
+    ## produce pdf with the tex source kept for submission
+    rmarkdown::render("jds-sample.Rmd")
+}
+}
