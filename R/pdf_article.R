@@ -49,7 +49,7 @@ jds_pdf_document <- function(...,
     template_name <- sprintf("template-%s.cls.tex", cls)
     ## disable autolink for bare links
     if (! is.null(md_extensions) &&
-        any(grepl("+autolink_bare_uris", md_extension, fixed = TRUE))) {
+        any(grepl("+autolink_bare_uris", md_extensions, fixed = TRUE))) {
         warning("The option 'autolink_bare_uris' is enabled, ",
                 "which may cause issues when email address is ",
                 "specified in the YAML header.")

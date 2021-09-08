@@ -4,11 +4,15 @@
 \alias{pdf_article}
 \title{PDF Article for Journal of Data Science}
 \usage{
-pdf_article(...)
+pdf_article(..., cls = c("jdsart", "jds"))
 }
 \arguments{
 \item{...}{Optional named arguments passed to \code{bookdown::pdf_book()}
 and \code{rmarkdown::pdf_document()} other than \code{base_format}.}
+
+\item{cls}{The LaTeX class name. The available choices are \code{jdsart} for
+the latest class developed by vtex, or \code{jds} for the deprecated
+class.}
 }
 \value{
 The output format that can only be used with
