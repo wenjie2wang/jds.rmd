@@ -1,18 +1,18 @@
 ---
-title: My Long JDS paper title
-short-title: My Short JDS paper title # optional short title
+title: My Paper Title
+short-title: My Paper Running Title # running title
 author:
-  - first: Adam
-    first-init: A.
-    last: Ahen
-    marker: '1,2'
-    thanks-ref: 1
-    email: foo@bar.com
+  - first: Adam                 # first name
+    first-init: A.              # initial of first name
+    last: Ahen                  # last name
+    marker: '1,2'               # identifier for the affiliation
+    footnote-id: 1              # optional identifier for the footnote
+    email: foo@bar.com          # optional email address
   - first: Brett
     first-init: B.
     last: Berger
     marker: 2
-    thanks-ref: 2
+    footnote-id: 2
   - first: Carl
     first-init: C.
     last: Camp
@@ -21,15 +21,15 @@ author:
     first-init: D.
     last: Dodge
     marker: 3
-thanks-text:
+footnote:
   - content: Corresponding author
-    type: corresp
+    type: corresp               # set type for the corresponding author
     id: 1
-  - content: Simple footnote.
+  - content: Another footnote.
     id: 2
 affiliation:
   - institution: University of Achievement
-    prefix: Department A
+    prefix: Department A        # optional
     country: Country A
     marker: 1
   - institution: Institution B
@@ -57,7 +57,7 @@ keywords:
   - Kullback--Leibler divergence
   - MCMC
   - quantiles
-bibliography: jds-sample.bib
+bibliography: jdsart-sample.bib
 output: jds.rmd::pdf_article
 ---
 

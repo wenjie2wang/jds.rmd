@@ -55,14 +55,21 @@ $endif$
 $if(short-title)$\runtitle{$short-title$}$endif$
 
 $for(author)$
-\author[$author.marker$]{\inits{$author.first-init$}\fnms{$author.first$}\snm{$author.last$}$if(author.thanks-ref)$\thanksref{$author.thanks-ref$}$endif$$if(author.email)$\ead{$author.email$}$endif$}
+\author[$author.marker$]{
+  \inits{$author.first-init$}
+  \fnms{$author.first$}
+  \snm{$author.last$}$if(author.footnote-id)$
+  \thanksref{$author.footnote-id$}$endif$$if(author.email)$
+  \ead{$author.email$}$endif$
+}
 $endfor$
 
-$for(thanks-text)$
-\thankstext[$if(thanks-text.type)$type=$thanks-text.type$,$endif$id=$thanks-text.id$]{$thanks-text.content$}$endfor$
+$for(footnote)$
+\thankstext[$if(footnote.type)$type=$footnote.type$,$endif$id=$footnote.id$]{$footnote.content$}$endfor$
 
 $for(affiliation)$
-\address[$affiliation.marker$]{$if(affiliation.prefix)$$affiliation.prefix$,$endif$\institution{$affiliation.institution$},\cny{$affiliation.country$}}
+\address[$affiliation.marker$]{$if(affiliation.prefix)$$affiliation.prefix$, $endif$
+  \institution{$affiliation.institution$}, \cny{$affiliation.country$}}
 $endfor$
 
 $if(abstract)$
