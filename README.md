@@ -8,13 +8,13 @@
 
 The R package **jds.rmd** provides R Markdown templates intended for
 [Journal of Data Science][jds-url], which can be useful for authoring
-manuscript with code chunks or producing tables/figures on the fly.
+a manuscript with code chunks or producing tables/figures on the fly.
 
 ## Installation
 
-### Option 1 (not yet)
+### Option 1
 
-You can install the released version from [CRAN][cran-url].
+One can install the released version from [CRAN][cran-url].
 
 ```R
 install.packages("jds.rmd")

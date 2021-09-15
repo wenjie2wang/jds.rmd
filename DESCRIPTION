@@ -10,8 +10,8 @@ Authors@R: c(
            comment = c(ORCID = "0000-0003-4401-7296"))
     )
 Description:
-    Customized R Markdown template and format for authoring and
-    submitting articles to Journal of Data Science.
+    Customized R Markdown templates for authoring articles
+    for Journal of Data Science.
 Depends:
     R (>= 3.2.3)
 Imports:
