@@ -16,13 +16,13 @@
 %% Either version 1.3 or (at your option) any later version.
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{jdsart}[2021/09/07 v0.18 Journal of Data Science class]
+\ProvidesClass{jdsart}[2022/04/20 v0.20 Journal of Data Science class]
 
 \def\fmt@name{jdsart}
 
 \RequirePackage{etoolbox}
 
-\newif\if@review
+\newif\if@review 
 \newif\if@inpress \@inpresstrue
 \newif\if@discussion
 \newif\if@chinese
@@ -101,7 +101,7 @@
 
 \def\@journal{Journal of Data Science}
 \def\@journalabbrev{Journal of Data Science}
-\def\@journal@url{https://jds-online.org}
+\def\@journal@url{https://www.jds.org}
 \def\@JOURNAL{JOURNAL OF DATA SCIENCE}
 \def\@jid{jds}
 \def\@JID{JDS}
@@ -140,9 +140,21 @@
 \newif\if@open@access \global\@open@accesstrue
 \def\cclicense@link{https://creativecommons.org/licenses/by/4.0/}
 \def\@openaccess{Open access article under the \href{\cclicense@link}{CC BY} license.}
-\def\copyright@statement{\lower5pc\hbox{\parbox{\textwidth}{\color[gray]{.7}\texttt{Preprint submitted to VTeX / \@journal\linebreak<\today>}}}}
+\def\copyright@statement{\textcopyright\ \@pubyear\ The Author(s). Published by the School of Statistics and 
+  the Center for Applied Statistics, Renmin University of China. \@openaccess}
 \def\copyright@line{\@copyright@fmt{\copyright@statement}}
-\def\@copyright@fmt#1{\vbox to0pt{\vskip-4.6pc\noindent\hbox{\footnotesize #1\hfill}\vss}}
+
+\newbox\copyright@box
+\def\@copyright@fmt#1{%
+  \setbox\copyright@box=\vbox to0pt{\vss \footnotesize #1\hfill}%
+  \wd\copyright@box=\z@
+  \ht\copyright@box=\z@
+  \dp\copyright@box=\z@
+  \footnotesize
+  \raise %11pt
+  \baselineskip
+  \box\copyright@box}
+
 \def\nocopyrightline{\gdef\copyright@line{\@copyright@fmt{}}}
 \def\credit@line{\@credit@fmt{\@credit}}
 \def\@credit@fmt#1{{\parindent0pt#1}}
@@ -179,18 +191,18 @@
 \RequirePackage{amsmath}
 \RequirePackage{amssymb}
 
-\let\kernel@bordmatrix@left(
+\let\kernel@bordmatrix@left(                                       
 \let\kernel@bordmatrix@right)
 \def\kernel@bordermatrix#1{%
-    \begingroup
+    \begingroup 
         \@nameuse{boredematrix@begin@hook}%
         \m@th \@tempdima 8.75\p@
         \setbox\z@\vbox{%
             \def\cr{\crcr\noalign{\kern2\p@\global\let\cr\endline}}%
             \ialign{$##$\hfil\kern2\p@\kern\@tempdima&\thinspace\hfil$##$\hfil
-                &&\quad\hfil$##$\hfil\crcr
+  	        &&\quad\hfil$##$\hfil\crcr
                 \omit\strut\hfil\crcr\noalign{\kern-\baselineskip}%
-                #1\crcr\omit\strut\cr
+	        #1\crcr\omit\strut\cr
                 }%
             }%
         \setbox\tw@\vbox{\unvcopy\z@\global\setbox\@ne\lastbox}%
@@ -343,8 +355,24 @@
     \gdef\first@keyword@env{1}%
   }
 
+\ifdefined\directlua
+  \def\fix@italic@cor{%
+    %% remove italic correction at the end of inline math before keyword sep ';'
+    \directlua{
+    local prevnode = tex.nest[tex.nest.ptr].tail 
+    if prevnode and prevnode.id == node.id("math") then
+      local pprevnode = prevnode.prev 
+      if pprevnode and pprevnode.id == node.id("kern") then
+        node.remove(tex.nest[tex.nest.ptr].head, pprevnode)
+      end
+    end
+  }}
+\else
+  \let\fix@italic@cor\empty
+\fi
+  
 \newif\if@firstkwd
-\def\kwd@sep{\unskip; }
+\def\kwd@sep{\unskip\fix@italic@cor; }
 \def\kwd@lastsep{\unskip}
 \def\kwd@font{\itshape}
 \def\msc@hrefprefix{https://www.ams.org/msc/msc2010.html?s=}
@@ -405,7 +433,7 @@
   \else
     \newpage
     \thispagestyle{copyright}
-  \fi
+  \fi  
   \MaketitleBox
   }
 
@@ -413,7 +441,7 @@
   \def\do##1{%
     \expandafter\author@fmt\expandafter{\the\c@author}{\csuse{##1t@loc@notes}}{##1}%
     }%
-  \front@author@defs
+  \front@author@defs 
   \expandafter\docsvlist\expandafter{\author@list}%
   \par
   }
@@ -561,9 +589,9 @@
   \fi
   }%
 
-\def\runtitle#1{\gdef\@runtitle{#1}}
+\def\runtitle#1{\gdef\@runtitle{#1}}                      
 \def\@runtitle{}
-\def\runauthor#1{\gdef\@runauthor{#1}}
+\def\runauthor#1{\gdef\@runauthor{#1}} 
 \def\@runauthor{\output@head@authors}
 \def\output@head@authors{}
 
@@ -573,9 +601,9 @@
   \front@author@defs
   \let\write@aux@au\@gobbletwo
   \def\ead##1##{\@gobble}%
-  \def\@inits##1{}%
-  \def\@snm##1{}%
-  \def\@fnm##1{}%
+  \def\@inits##1{}%  
+  \def\@snm##1{}%  
+  \def\@fnm##1{}%  
   \let\~\empty
   \def\inits##1{\def\@inits{, ##1}}%
   \def\snm##1{\def\@snm{##1}}%
@@ -583,7 +611,7 @@
   }
 
 \def\head@author@fmt#1{%
-  \head@author@defs
+  \head@author@defs 
   \get@author@num #1\relax
   \set@author@sep
   \@author@sep
@@ -591,7 +619,7 @@
   \@snm \@inits
   }
 \def\head@authors@font{\itshape\selectfont}
-
+  
 \newbox\headbox
 \def\@output@head@authors{%
   \bgroup
@@ -604,7 +632,7 @@
     \fi
   \egroup
   }
-
+  
 %% define header and footer
 \RequirePackage{fancyhdr}
 \setlength{\headheight}{24pt}
@@ -622,10 +650,10 @@
   \fancyhf{}%
   \fancyhead[L]{\normalfont\footnotesize\print@volume@line}
   \fancyhead[R]{\footnotesize DOI: \@doi\\ \@pretitle}
-  \fancyfoot[LE,RO]{\@pageprefix\thepage}% number of the first page
+  \fancyfoot[LE,RO]{}% number of the first page
   \fancyfoot[RE,LO]{\footnotesize \history@fmt}
 }
-
+  
 \if@discussion
   \fancypagestyle{doipage}{%
     \renewcommand{\headrulewidth}{0pt}%
@@ -722,11 +750,11 @@
 \IfFileExists{vtexnatbib.sty}
   {\RequirePackage[authoryear,round]{vtexnatbib}}
   {\RequirePackage[authoryear,round]{natbib}}
-
+  
 \let\code\texttt
 \let\proglang\textsf
 \newcommand{\pkg}[1]{{\fontshape{it}\selectfont #1}}
-
+  
 \setlength{\bibsep}{0em}
 
 \def\MR@url{https://www.ams.org/mathscinet-getitem?mr=}
@@ -815,7 +843,7 @@
 \frenchspacing
 
 %% >>> Metadata >>>
-\def\@publisher{School of Statistics, Renmin University of China}
+\def\@publisher{School of Statistics, Renmin University of China}  
 \def\@publisheraddress{No. 59 Zhongguancun Street, Haidian
   District Beijing 100872, P.R. China}
 \def\@issn{1680-743X}
@@ -844,7 +872,7 @@
     }
   \@nameuse{\rmdefault @font@fix}
 \fi
-
+  
 %% >>> author setup >>>
 \def\author@font{\fontsize{\@xipt}{17pt}\scshape}
 \def\author@preskip{2\p@}
@@ -855,10 +883,10 @@
 \let\orcid\@gobble
 
 \newcounter{author}
-
+  
 \protected\def\fmt@snm#1{\textsc{#1}}
 \protected\def\fmt@fnms#1{\textsc{#1}}
-
+   
 \let\write@aux@au\@gobbletwo
 \protected\def\@write@aux@au#1#2{%
   \protect\protected@write\@auxout{}{\string\global\string\@namedef{metadata@\author@num @#1}{#2}}%
@@ -875,7 +903,7 @@
   \let\roles\@gobble
   \let\~\empty
   }
-
+  
 \def\front@author@defs{%
   \let\bio\@gobble
   \let\write@aux@au\@write@aux@au
@@ -897,15 +925,15 @@
   \protected\def\suffix##1{##1}%
   \protected\def\roles##1{##1}%
   }
-
+  
 \def\author{%
   \@ifnextchar[%
     {\author@optarg}
     {\author@optarg[]}%
   }
-
+  
 \def\author@optarg[#1]#2{%
-  %% headings will use authors
+  %% headings will use authors 
   \global\let\output@head@authors\@output@head@authors
   \stepcounter{author}%
   \beg@elem
@@ -923,8 +951,8 @@
       \xappto\author@list{,author\the\c@author}%
     }%
   \bgroup
-    \front@author@eval@emails
-    \setbox\z@=\hbox{#2}%
+    \front@author@eval@emails  
+    \setbox\z@=\hbox{#2}%  
   \egroup
   \csname author@end@hook\endcsname
   }%
@@ -936,7 +964,7 @@
     \@act
   \endgroup
   }
-
+  
 \def\do@pdfmeta@authors{%
   \@tempcnta\z@
   \@whilenum\@tempcnta<\c@author\do{%
@@ -947,7 +975,7 @@
     \addto@pdfmeta@authors{%
       \@ifundefined{metadata@\the\@tempcnta @inits}{}{%
         \@nameuse{metadata@\the\@tempcnta @inits}%
-        \space
+        \space 
         }%
       \@nameuse{metadata@\the\@tempcnta @snm}%
       }%
@@ -963,8 +991,8 @@
     }%
   }
 
-\def\author@num{0}
-\def\get@author@num author#1\relax{\def\author@num{#1}}
+\def\author@num{0}  
+\def\get@author@num author#1\relax{\def\author@num{#1}}  
 \def\author@sep{, }
 \def\author@twosep{ and }
 \def\author@lastsep{, and }
@@ -976,7 +1004,7 @@
         \let\@author@sep\author@twosep
       \else
         \let\@author@sep\author@lastsep
-      \fi
+      \fi    
     \else
       \let\@author@sep\author@sep
     \fi
@@ -984,7 +1012,7 @@
     \let\@author@sep\empty
   \fi
   }
-
+  
 \newtoks\temptoks
 \def\author@fmt#1#2#3{%
   \ifdefined\author@fmt@init@done
@@ -1032,7 +1060,7 @@
   \ifnum\note@cnt>\@ne
     \add@xtok\t@loc@notes{\note@sep}%
   \fi
-  \add@tok\t@loc@notes{#1}%
+  \add@tok\t@loc@notes{\ref{aff.#1}}%
   }
 \def\note@sep{,}
 %% <<< author setup <<<
@@ -1186,18 +1214,18 @@
     \@act
   \endgroup
   }
-
+  
 \def\@fnsymbol#1{%
   \ifcase #1%
-  \or \TextOrMath \textdagger \dagger
-  \or \TextOrMath \textdaggerdbl \ddagger
-  \or \TextOrMath \textsection \mathsection
-  \or \TextOrMath \textparagraph \mathparagraph
+  \or \TextOrMath \textdagger \dagger 
+  \or \TextOrMath \textdaggerdbl \ddagger 
+  \or \TextOrMath \textsection \mathsection 
+  \or \TextOrMath \textparagraph \mathparagraph 
   \or \TextOrMath \textbardbl \|%
   \or \TextOrMath {\textasteriskcentered \textasteriskcentered }{**}%
   \or \TextOrMath {\textdagger \textdagger }{\dagger \dagger }%
   \or \TextOrMath {\textdaggerdbl \textdaggerdbl }{\ddagger \ddagger }%
-  \else \@ctrerr \fi}
+  \else \@ctrerr \fi} 
 
 \newcounter{correspnote}
 \def\corresp@note@counter{correspnote}
@@ -1299,7 +1327,7 @@
   \fi
   \global\t@loc@notes\expandafter{\the\t@loc@notes#1}%
   }
-
+  
 \def\elem@nothanksref#1\thanksref{%
   \futurelet\@peektok\elem@thanksref
   }
@@ -1315,7 +1343,7 @@
   \add@thanks{id=#1}%
   \elem@nothanksref
   }
-
+  
 \def\elem@nothanks#1\thanks{%
   \futurelet\@peektok\elem@thanks
   }
@@ -1339,7 +1367,7 @@
   \add@thanks{}%
   \elem@nothanks
   }
-
+  
 \define@key{thankstext}{type}{\gdef\thankstext@type{#1}}
 \define@key{thankstext}{id}{\gdef\thankstext@id{#1}}
 \def\reset@thankstext{%
@@ -1364,7 +1392,7 @@
     \thankstext@fmt{\thefootnote}{\csname \thankstext@type @prehook\endcsname #2\csname \thankstext@type @posthook\endcsname}%
   }
 
-
+  
 \define@key{addthanks}{id}{\def\addthanks@id{#1}}
 \define@key{addthanks}{mark}{\def\addthanks@mark{#1}}
 \define@key{addthanks}{type}{\def\addthanks@type{#1}}
@@ -1465,9 +1493,9 @@
         \gdef\ead@mark{#2}%
     \fi
     }
-
+    
 \def\ead@hrefprefix@email{mailto:}
-
+        
 \DeclareRobustCommand\ead[2][]{{%
 %% few necessary printead.sty definitions
   \define@key{ead}{label}{\def\ead@id{#1}}%
@@ -1510,7 +1538,7 @@
   \egroup
   }
 
-\protected\def\corresp@posthook{\output@frontmatter@emails}
+\protected\def\corresp@posthook{\output@frontmatter@emails} 
 %% <<< email <<<
 
 %% >>> history >>>
@@ -1527,7 +1555,7 @@
 \def\sday#1{\gdef\@sday{#1}#1}
 \def\syear#1{\gdef\@syear{#1}#1}
 \def\smonth#1{%
-  \gdef\@smonth{#1}%
+  \gdef\@smonth{#1}%  
   \@ifundefined{month@item@#1}%
     {\@latex@error{There is no month with number '#1'!}\@ehc}%
     {\getitemvalue{month}{#1}}%
@@ -1595,7 +1623,7 @@
   \history@postfix
   }
 
-\def\history@skip{14pt}
+\def\history@skip{14pt}  
 \def\output@frontmatter@history{%
     \vskip\history@skip
     \bgroup
@@ -1603,7 +1631,7 @@
       \history@fmt
     \egroup
     \par
-  }
+  }  
 %% <<< history <<<
 
 \let\cny\@firstofone
@@ -1679,7 +1707,7 @@
     \fi
     }%
   }
-
+  
 \newenvironment{Env@EndOfContrib}[1]
   {%
     \if@noskipsec\leavevmode\fi
@@ -1779,7 +1807,7 @@
   \@rotfloat{table}}
   {\end@rotfloat}
 
-%%%%%%%%%%%%%%% CONTCAPTION
+%%%%%%%%%%%%%%% CONTCAPTION 
 
 \def\contcaptionbraces#1#2{\gdef\contcaptionbraces@left{#1}\gdef\contcaptionbraces@right{#2}}
 \contcaptionbraces()
