@@ -49,13 +49,17 @@ team with the generated LaTeX source together with the generated figure files if
 any.
 
 
+## More Options
+
 The package contains two class files, `jdsart.cls` and `jds.cls`.
 The former is the latest version developed by [VTeX][jdsart-cls] and thus
 recommended; the latter is deprecated and was developed before having the
 production support by VTeX.
 The function `jds.rmd::draft()` creates a draft using the `jdsart.cls` by
 default.
-A draft using the `jds.cls` can be created by specifying `cls = "jds"`.
+
+
+Alternatively, a draft using the `jds.cls` can be created by specifying `cls = "jds"`.
 For those users who use the latest **jds.rmd** package but the deprecated class
 file, an option `cls: jds` needs to be added to the YAML header as follows:
 
