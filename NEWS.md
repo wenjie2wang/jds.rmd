@@ -1,3 +1,10 @@
+# jds.rmd 0.3.1
+
+## Minor updates
+
+* Updated the included `jdsart.cls` from v0.18 to v0.20.
+
+
 # jds.rmd 0.3.0
 
 ## New features
