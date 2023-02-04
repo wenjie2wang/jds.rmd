@@ -22,18 +22,24 @@ draft <- function(file, cls = c("jdsart", "jds"))
     if (file.exists(file))
         stop("The file '", file, "' already exists.")
     cls <- match.arg(cls, c("jdsart", "jds"))
-    sk_dir <- if (cls == "jdsart") {
-                  "skeleton"
-              } else {
-                  "skeleton-jds.cls"
-              }
+    sk_dir <-
+        if (cls == "jdsart") {
+            "skeleton"
+        } else {
+            warning(
+                "The option 'jds' uses the deprecated 'jds.cls'; ",
+                "It would be better to use the option 'jdsart' ",
+                "for drafting a new manuscript."
+            )
+            "skeleton-jds.cls"
+        }
     skeleton_files <- list.files(file.path(template_path, sk_dir),
                                  full.names = TRUE)
     to <- dirname(file)
     for (f in skeleton_files) {
         if (file.exists(file.path(to, basename(f))))
-            stop("The file '", basename(f), "' already exists")
-        file.copy(from = f, to = to, overwrite = FALSE, recursive = TRUE)
+            stop("The file '", basename(f), "' already exists.")
+        file.copy(from = f, to = to, overwrite = FALSE)
     }
     file.rename(file.path(dirname(file), "skeleton.Rmd"), file)
     invisible(file)
